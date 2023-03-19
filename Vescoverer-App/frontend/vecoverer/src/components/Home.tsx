@@ -1,3 +1,8 @@
+import { Link } from "react-router-dom";
+
+
+
+
 interface IProps {
     isVegan:  boolean
     shake: boolean
@@ -26,7 +31,7 @@ const Home : React.FC<IProps> = ({isVegan, shake, handleChange, callback}) => {
                     </label>
                     <br></br>
                     {
-                isVegan ? <button className="btn btn-dark">Done</button>
+                isVegan ? <Link to="/login" className="btn btn-dark">Done</Link>
                 : <button className={shake ? "shake btn btn-dark" : "btn btn-dark"} onClick={callback}>Done</button>
             }
                 </div>
