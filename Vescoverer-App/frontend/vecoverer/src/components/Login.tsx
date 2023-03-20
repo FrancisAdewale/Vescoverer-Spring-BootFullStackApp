@@ -1,12 +1,15 @@
+import "../Login.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {auth , provider, db} from '../firebase.js';
+import navLogo from '../Images/nav-logo.png';
 
 
 
 const Login = () => {
 
     const navigate = useNavigate()
-    const [user, setUser] = useState("")
+    const [user, setUser] = useState<string>("")
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const [completedReg, setCompletedReg] = useState(false)
@@ -14,7 +17,31 @@ const Login = () => {
     useEffect(() => {
         getCurrentCoordinates()
         console.log(latitude + " " + longitude);
-    }, [])
+    }, [user])
+
+
+
+    useEffect(() => {
+
+
+      
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS,PUT'
+      },
+        body: JSON.stringify({ 
+          longitude: longitude,
+          latitude: latitude,
+          email : user,
+          first_name: "meh"
+        }),
+    };
+      fetch("http://localhost:8080/api/user", requestOptions)
+      .then(res => res.json()).catch(err => {console.log(err)})
+      .then(data => console.log(data))
+  }, [])
 
     function getCurrentCoordinates(): Promise<GeolocationPosition> {
         return new Promise((resolve, reject) => {
@@ -30,10 +57,31 @@ const Login = () => {
         });
       }
 
+      const signin = () => {
+
+        auth.signInWithPopup(provider)
+        .then((result) => {
+          const userEmail = result.user?.email
+          console.log(userEmail);
+          setUser(userEmail as string)
+         }).catch(alert)
+}
+
     return (
-        <div>
-            meh
-        </div>
+      <div className='login-outer'>
+      <nav>
+      <img src={require("../Images/nav-logo.png")} className="nav-logo" alt="logo"/>
+      <h1>Vescoverer</h1>
+      </nav>
+
+      <div className='login-middle'>
+          <div className='login-inner'>
+          <button className="google-btn" onClick={signin}>
+              Sign In with Google
+          </button>
+          </div>
+      </div>
+  </div>
 
     );
 }

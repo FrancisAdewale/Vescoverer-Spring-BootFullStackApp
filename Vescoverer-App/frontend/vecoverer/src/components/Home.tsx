@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
 
-
-
-
 interface IProps {
     isVegan:  boolean
     shake: boolean
