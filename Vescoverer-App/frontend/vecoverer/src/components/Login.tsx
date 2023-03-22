@@ -20,29 +20,6 @@ const Login = () => {
     }, [user])
 
 
-
-    useEffect(() => {
-
-
-      
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin':'*',
-        'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS,PUT'
-      },
-        body: JSON.stringify({ 
-          longitude: longitude,
-          latitude: latitude,
-          email : user,
-          first_name: "meh"
-        }),
-    };
-      fetch("http://localhost:8080/api/user", requestOptions)
-      .then(res => res.json()).catch(err => {console.log(err)})
-      .then(data => console.log(data))
-  }, [])
-
     function getCurrentCoordinates(): Promise<GeolocationPosition> {
         return new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(
@@ -52,6 +29,7 @@ const Login = () => {
             },
             (error) => {
               reject(error);
+              
             }
           );
         });
@@ -62,8 +40,20 @@ const Login = () => {
         auth.signInWithPopup(provider)
         .then((result) => {
           const userEmail = result.user?.email
-          console.log(userEmail);
           setUser(userEmail as string)
+          const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json',
+          },
+            body: JSON.stringify({ 
+              longitude: Math.abs(longitude),
+              latitude: Math.abs(latitude),
+              email : userEmail,
+            }),
+        };
+          fetch("http://localhost:8080/api/user", requestOptions)
+          .then(res => res.json()).catch(err => {console.log(err)})
+          .then(data => navigate("/register"))
          }).catch(alert)
 }
 
