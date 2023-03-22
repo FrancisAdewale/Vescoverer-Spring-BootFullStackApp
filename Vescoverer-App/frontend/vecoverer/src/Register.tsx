@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import "./Register.css"
 import Name from './components/register/Name';
+import VeganFor from './components/register/VeganFor';
 
 
 const Register = () => {
@@ -156,11 +157,10 @@ const Register = () => {
                                 //         callback={changeRegState}
                                 //     />
 
-                                // default:
-                                //     return <VeganFor
-                                //         isCompleted={sections.veganForCompleted}
-                                //         callback={changeRegState}
-                                //     />
+                                default:
+                                    return <VeganFor
+                                        callback={changeRegState}
+                                    />
                             }
 
                         })()

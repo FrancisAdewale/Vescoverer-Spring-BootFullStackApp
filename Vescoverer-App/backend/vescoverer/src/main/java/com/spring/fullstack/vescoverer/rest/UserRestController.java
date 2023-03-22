@@ -25,6 +25,7 @@ public class UserRestController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/user")
     public User saveUser(@RequestBody User user) {
-        return userService.save(user);
+        User dbUser = userService.save(user);
+        return dbUser;
     }
 }

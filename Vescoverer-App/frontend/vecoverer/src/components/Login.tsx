@@ -35,7 +35,7 @@ const Login = () => {
         });
       }
 
-      const signin = () => {
+      const signin = async () => {
 
         auth.signInWithPopup(provider)
         .then((result) => {
