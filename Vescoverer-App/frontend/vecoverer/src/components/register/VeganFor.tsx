@@ -16,7 +16,7 @@ const VeganFor : React.FC<IProps> = ({callback}) => {
     const [val, setVal] = useState("<5 Years")
     const [required, setRequired] = useState(false)
     const user = auth.currentUser?.email
-    const [userData, setUserData] = useState<User>()
+    const [userData, setUserData] = useState<User[] | []>([])
 
     useEffect(() => {
         fetch("http://localhost:8080/api/user")
@@ -24,6 +24,10 @@ const VeganFor : React.FC<IProps> = ({callback}) => {
         .then(data => setUserData(data))
 
     }, [])
+
+    console.log("veganfor : " + userData)
+
+
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const h3Eele = document.getElementById("timeframe") as Element
@@ -33,18 +37,30 @@ const VeganFor : React.FC<IProps> = ({callback}) => {
 
         h3Eele.textContent = value
 
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json',
-          },
-            body: JSON.stringify({ 
-              email : user,
-              veganFor: val
-            }),
-        };
-    
-          fetch("http://localhost:8080/api/user", requestOptions)
-          .then(res => res.json()).catch(err => {console.log(err)})
+        //potentially pass this as a function to parent component
+        for(let i = 0; i < userData.length; i++) {
+          if (userData[i].email === user) {
+            const requestOptions = {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json',
+            },
+              body: JSON.stringify({ 
+                id: userData[i].id,
+                email: userData[i].email, 
+                veganFor: val,
+                longitude: userData[i].longitude,
+                latitude: userData[i].latitude
+              }),
+          };
+      
+            fetch("http://localhost:8080/api/user", requestOptions)
+            .then(res => res.json()).catch(err => {console.log(err)})
+
+          }
+        }
+
+
+      
 
     }
 

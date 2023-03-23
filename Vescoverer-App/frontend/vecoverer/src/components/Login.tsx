@@ -17,7 +17,7 @@ const Login = () => {
     useEffect(() => {
         getCurrentCoordinates()
         console.log(latitude + " " + longitude);
-    }, [user])
+    }, [])
 
 
     function getCurrentCoordinates(): Promise<GeolocationPosition> {

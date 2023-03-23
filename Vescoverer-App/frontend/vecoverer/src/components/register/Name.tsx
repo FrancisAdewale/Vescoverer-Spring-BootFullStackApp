@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {auth , provider, db} from '../../firebase.js';
+import User from '../../model/User.js';
 
 interface IProps {
     callback: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
-
 
 const Name: React.FC<IProps> = ({callback}) => {
 
@@ -14,23 +14,54 @@ const Name: React.FC<IProps> = ({callback}) => {
     const firstEle = document.getElementById("firstName")
     const secondEle = document.getElementById("secondName")
 
+    const [userData, setUserData] = useState<User[] | []>([])
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/user")
+        .then(res => res.json()).catch(error => console.log(error))
+        .then(data => setUserData(data))
+    }, [])
+
+    console.log("name page: " + userData)
 
 
     const handleFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
-
         const {required, value} = e.target
-
-        console.log(value)
-    
+        setFirstName(value)
        }
     
        const handleSecondName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    
         const {required, value} = e.target
-    
-        console.log(value)
+        setSecondName(value)
 
        }
+
+       useEffect(() => {
+
+        for(let i = 0; i < userData.length; i++) {
+            if (userData[i].email === user) {
+              const requestOptions = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json',
+              },
+                body: JSON.stringify({ 
+                  id: userData[i].id,
+                  email: userData[i].email, 
+                  veganFor: userData[i].veganFor,
+                  longitude: userData[i].longitude,
+                  latitude: userData[i].latitude,
+                  firstName: firstName,
+                  lastName: secondName
+                }),
+            };
+        
+              fetch("http://localhost:8080/api/user", requestOptions)
+              .then(res => res.json()).catch(err => {console.log(err)})
+  
+            }
+          }
+
+       },[firstName,secondName])
 
 
     return (
@@ -38,7 +69,6 @@ const Name: React.FC<IProps> = ({callback}) => {
             <input id="firstName" type="text" placeholder="First Name" onChange={handleFirstName}  />
             <input id="secondName" type="text" placeholder="Second Name" onChange={handleSecondName}  />
             <button className="name-done-btn" id="name" onClick={(e) => callback(e)}>Next</button>
-
         </form>
 
     );

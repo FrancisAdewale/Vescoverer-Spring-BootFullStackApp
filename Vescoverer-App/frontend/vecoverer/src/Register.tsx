@@ -1,17 +1,19 @@
 import { auth, provider, db } from './firebase.js';
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from 'react';
-import "./Register.css"
+import "./Register.css";
 import Name from './components/register/Name';
 import VeganFor from './components/register/VeganFor';
+import Age from './components/register/Age';
 
 
 const Register = () => {
 
-    const navigate = useNavigate()
-    const names = ["Vegan For", "Name", "Age", "Gender", "Upload Image", "Socials"]
+    const navigate = useNavigate();
+    const names = ["Vegan For", "Name", "Age", "Gender", "Upload Image", "Socials"];
 
     const user = auth.currentUser?.email
+    const [dbUser, setDbUser] = useState(null);
     const [veganForShake, setVeganForShake] = useState(false);
     const [sections, setSections] = useState(
         [
@@ -23,14 +25,15 @@ const Register = () => {
             {name : "Socials", socialsCompleted : false}
     ]
     )
-    const [sectionCount, setSectionCount] = useState(0)
+    const [sectionCount, setSectionCount] = useState(0);
+    
 
     const changeRegState = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
         e.preventDefault();
-        const { id } = e.target as Element
+        const { id } = e.target as Element;
 
-        console.log(id)
+        console.log(id);
         
         if(id === "vegan") {
 
@@ -137,10 +140,10 @@ const Register = () => {
                                         callback={changeRegState}
                                     />
 
-                                // case (sections[2].ageCompleted === false && sections[1].nameCompleted):
-                                //     return <Age
-                                //         callback={changeRegState}
-                                //     />
+                                case (sections[2].ageCompleted === false && sections[1].nameCompleted):
+                                    return <Age
+                                        callback={changeRegState}
+                                    />
 
                                 // case (sections[1].nameCompleted && sections[2].ageCompleted && sections[0].veganForCompleted && sections[3].genderCompleted === false):
                                 //     return <Gender
