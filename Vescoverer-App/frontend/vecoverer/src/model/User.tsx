@@ -1,7 +1,7 @@
 export default class User {
     id: number
     firstName: string
-    secondName: string
+    lastName: string
     email: string
     age: number
     veganFor: string
@@ -15,7 +15,7 @@ export default class User {
     constructor(){
         this.id = 0
         this.firstName = ""
-        this.secondName = ""
+        this.lastName = ""
         this.email = ""
         this.age = 0
         this.veganFor = ""

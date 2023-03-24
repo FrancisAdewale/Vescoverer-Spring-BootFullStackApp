@@ -8,35 +8,34 @@ interface IProps {
 
 const Name: React.FC<IProps> = ({callback}) => {
 
-    const [firstName, setFirstName] = useState("")
-    const [secondName, setSecondName] = useState("")
-    const user = auth.currentUser?.email
-    const firstEle = document.getElementById("firstName")
-    const secondEle = document.getElementById("secondName")
-
-    const [userData, setUserData] = useState<User[] | []>([])
+    const [firstName, setFirstName] = useState("");
+    const [secondName, setSecondName] = useState("");
+    const user = auth.currentUser?.email;
+  
+    const [userData, setUserData] = useState<User[] | []>([]);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/user")
         .then(res => res.json()).catch(error => console.log(error))
         .then(data => setUserData(data))
-    }, [])
+    }, []);
 
-    console.log("name page: " + userData)
-
+  
 
     const handleFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {required, value} = e.target
-        setFirstName(value)
+        const {required, value} = e.target;
+        setFirstName(value);
+        
        }
     
        const handleSecondName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {required, value} = e.target
-        setSecondName(value)
-
+        const {required, value} = e.target;
+        setSecondName(value);
        }
 
        useEffect(() => {
+
+        console.log("firstName: " + firstName + " Second name:" + secondName)
 
         for(let i = 0; i < userData.length; i++) {
             if (userData[i].email === user) {
@@ -61,8 +60,7 @@ const Name: React.FC<IProps> = ({callback}) => {
             }
           }
 
-       },[firstName,secondName])
-
+       },[firstName,secondName]);
 
     return (
         <form className="form--fullname">
