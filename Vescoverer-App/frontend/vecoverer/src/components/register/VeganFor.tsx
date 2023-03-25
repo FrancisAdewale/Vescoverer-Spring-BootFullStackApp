@@ -52,21 +52,12 @@ const VeganFor : React.FC<IProps> = ({callback}) => {
                 latitude: userData[i].latitude
               }),
           };
-      
             fetch("http://localhost:8080/api/user", requestOptions)
             .then(res => res.json()).catch(err => {console.log(err)})
 
           }
         }
-
-
-      
-
     }
-
-    
-
-   
     return (
         <form>
         <div className="select-box">
@@ -78,7 +69,10 @@ const VeganFor : React.FC<IProps> = ({callback}) => {
             <option value="<2 Years"> Less than 2 Years</option>
             <option value="<6 Months">Less than 6 Months</option>
           </select>
-          <h3 id="timeframe"></h3>
+          <h3 id="timeframe" style={{
+            marginTop : "20px"
+
+          }}></h3>
           <button id="vegan" className="vegan-done-btn" onClick={(e) => callback(e)}>Next</button>
         </div>
       </form>  
