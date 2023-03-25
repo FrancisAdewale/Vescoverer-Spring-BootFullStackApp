@@ -6,6 +6,7 @@ import Name from './components/register/Name';
 import VeganFor from './components/register/VeganFor';
 import Age from './components/register/Age';
 import Gender from './components/register/Gender';
+import Upload from './components/register/Upload';
 
 
 const Register = () => {
@@ -151,10 +152,10 @@ const Register = () => {
                                         callback={changeRegState}
                                     />
 
-                                // case (sections[4].uploadCompleted === false && sections[3].genderCompleted):
-                                //     return <Upload
-                                //         callback={changeRegState}
-                                //     />
+                                case (sections[4].uploadCompleted === false && sections[3].genderCompleted):
+                                    return <Upload
+                                        callback={changeRegState}
+                                    />
 
                                 // case (sections[5].socialsCompleted === false && sections[4].uploadCompleted):
                                 //     return <Socials

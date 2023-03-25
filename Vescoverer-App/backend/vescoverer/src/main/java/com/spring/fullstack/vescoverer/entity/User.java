@@ -43,8 +43,9 @@ public class User {
     @Column(name="instagram")
     String instagram;
 
-    @Column(name="image")
-    String ImagePath;
+    @Column(name="image", columnDefinition = "longtext")
+
+    String imagePath;
 
     @OneToMany(mappedBy="user",
             cascade= {CascadeType.PERSIST, CascadeType.MERGE,
@@ -73,7 +74,7 @@ public class User {
                     this.gender = gender;
                     this.twiiter = twiiter;
                     this.instagram = instagram;
-                    ImagePath = imagePath;
+                    this.imagePath = imagePath;
     }
 
     public int getId() {
@@ -165,11 +166,11 @@ public class User {
     }
 
     public String getImagePath() {
-        return ImagePath;
+        return imagePath;
     }
 
     public void setImagePath(String imagePath) {
-        ImagePath = imagePath;
+        this.imagePath = imagePath;
     }
 
     public List<FriendsList> getFriendsList() {
@@ -195,7 +196,7 @@ public class User {
                 ", gender='" + gender + '\'' +
                 ", twiiter='" + twiiter + '\'' +
                 ", instagram='" + instagram + '\'' +
-                ", ImagePath='" + ImagePath + '\'' +
+                ", ImagePath='" + imagePath + '\'' +
                 '}';
     }
 }
