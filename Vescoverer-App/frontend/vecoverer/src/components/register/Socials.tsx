@@ -44,7 +44,7 @@ const Socials : React.FC<IProps> = ({callback}) => {
                   imagePath: userData[i].imagePath,
                   instagram: instagram,
                   twitter: twitter,
-                  completedReg: 1
+                  completedReg: true
                 }),
             };
               fetch("http://localhost:8080/api/user", requestOptions)
