@@ -34,9 +34,6 @@ const Name: React.FC<IProps> = ({callback}) => {
        }
 
        useEffect(() => {
-
-        console.log("firstName: " + firstName + " Second name:" + secondName)
-
         for(let i = 0; i < userData.length; i++) {
             if (userData[i].email === user) {
               const requestOptions = {
@@ -53,10 +50,8 @@ const Name: React.FC<IProps> = ({callback}) => {
                   lastName: secondName
                 }),
             };
-        
               fetch("http://localhost:8080/api/user", requestOptions)
               .then(res => res.json()).catch(err => {console.log(err)})
-  
             }
           }
 

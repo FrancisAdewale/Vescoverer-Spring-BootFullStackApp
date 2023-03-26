@@ -38,7 +38,7 @@ public class User {
     String gender;
 
     @Column(name="twitter")
-    String twiiter;
+    String twitter;
 
     @Column(name="instagram")
     String instagram;
@@ -47,12 +47,14 @@ public class User {
 
     String imagePath;
 
+
+    @Column(name="completed_reg", columnDefinition = "TINYINT(1)")
+    boolean completedReg;
+
     @OneToMany(mappedBy="user",
             cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
     private List<FriendsList> friendsList;
-
-
 
     public User() {
 
@@ -61,7 +63,7 @@ public class User {
     public User(String firstName, String lastName,
                 String email, int age, String veganFor,
                 double longitude, double latitude,
-                String gender, String twiiter,
+                String gender, String twitter,
                 String instagram, String imagePath) {
 
                     this.firstName = firstName;
@@ -72,7 +74,7 @@ public class User {
                     this.longitude = longitude;
                     this.latitude = latitude;
                     this.gender = gender;
-                    this.twiiter = twiiter;
+                    this.twitter = twitter;
                     this.instagram = instagram;
                     this.imagePath = imagePath;
     }
@@ -149,12 +151,12 @@ public class User {
         this.gender = gender;
     }
 
-    public String getTwiiter() {
-        return twiiter;
+    public String getTwitter() {
+        return twitter;
     }
 
-    public void setTwiiter(String twiiter) {
-        this.twiiter = twiiter;
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
     }
 
     public String getInstagram() {
@@ -172,6 +174,15 @@ public class User {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public boolean isCompletedReg() {
+        return completedReg;
+    }
+
+    public void setCompletedReg(boolean completedReg) {
+        this.completedReg = completedReg;
+    }
+
 
     public List<FriendsList> getFriendsList() {
         return friendsList;
@@ -194,7 +205,7 @@ public class User {
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
                 ", gender='" + gender + '\'' +
-                ", twiiter='" + twiiter + '\'' +
+                ", twitter='" + twitter + '\'' +
                 ", instagram='" + instagram + '\'' +
                 ", ImagePath='" + imagePath + '\'' +
                 '}';

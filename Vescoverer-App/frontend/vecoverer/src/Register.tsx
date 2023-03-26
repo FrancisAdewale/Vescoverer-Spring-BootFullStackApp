@@ -1,12 +1,14 @@
 import { auth, provider, db } from './firebase.js';
 import { Navigate, useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import "./Register.css";
 import Name from './components/register/Name';
 import VeganFor from './components/register/VeganFor';
 import Age from './components/register/Age';
 import Gender from './components/register/Gender';
 import Upload from './components/register/Upload';
+import User from './model/User.js';
+import Socials from './components/register/Socials';
 
 
 const Register = () => {
@@ -28,6 +30,15 @@ const Register = () => {
     ]
     )
     const [sectionCount, setSectionCount] = useState(0);
+
+    const [userData, setUserData] = useState<User[] | []>([])
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/user")
+        .then(res => res.json()).catch(error => console.log(error))
+        .then(data => setUserData(data))
+
+    }, [])
     
 
     const changeRegState = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -115,12 +126,6 @@ const Register = () => {
 
             temp_state[5] = temp_element
             setSections(temp_state)
-
-            // db.collection("users").doc(user).set({
-            //     completedRegistration : true,
-            //     isVerified: false,
-            //     uploadedVerifyImage: false
-            // }, { merge: true })
             navigate("/dashboard")
         }
 
@@ -157,10 +162,10 @@ const Register = () => {
                                         callback={changeRegState}
                                     />
 
-                                // case (sections[5].socialsCompleted === false && sections[4].uploadCompleted):
-                                //     return <Socials
-                                //         callback={changeRegState}
-                                //     />
+                                case (sections[5].socialsCompleted === false && sections[4].uploadCompleted):
+                                    return <Socials
+                                        callback={changeRegState}
+                                    />
 
                                 default:
                                     return <VeganFor

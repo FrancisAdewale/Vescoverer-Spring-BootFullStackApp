@@ -11,6 +11,7 @@ export default class User {
     twitter: string
     instagram: string
     imagePath: string
+    completedReg: boolean
 
     constructor(){
         this.id = 0
@@ -26,7 +27,7 @@ export default class User {
         this.twitter = ""
         this.instagram = ""
         this.imagePath = ""
-
+        this.completedReg = false
     }
 
 }
