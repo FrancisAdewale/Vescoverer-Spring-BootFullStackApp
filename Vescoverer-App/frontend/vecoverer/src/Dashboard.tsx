@@ -66,13 +66,16 @@ const Dashboard = () => {
   const [badgeCount, setBadgeCount] = useState(0);
   const [hasClickedBadge, setHasClickedBadge] = useState(false);
   const childRef = useRef<HTMLInputElement>(null);
-  const [address, setAddress] = useState("");
   const [update, setUpdate] = useState(false);
   const [result, setResult] = useState(null);
   const [isVerified, setIsVerfied] = useState(null);
   const [account, setUserAccount] = useState<User | null>(null);
   const [userData, setUserData] = useState<User[] | []>([]);
-  const user = auth.currentUser?.email
+  const user = auth.currentUser?.email;
+  const [address, setAddress] = useState<string| undefined>();
+  const [latitude, setLatitude] = useState<number | undefined>();
+  const [longitude, setLongitude] = useState<number | undefined>();
+
 
 
   useEffect(() => {
@@ -95,7 +98,22 @@ const Dashboard = () => {
 
   }, [userData]);
 
-  console.log("account: " + account);
+  useEffect(() => {
+
+    let url = new URL("https://maps.googleapis.com/maps/api/geocode/json");
+
+    url.searchParams.append("latlng", account?.latitude + "," + account?.longitude);
+    url.searchParams.append("key", "AIzaSyAoXbdfMQwOfus_BWjI9isGCIYHz6IdSnM");
+    fetch(url)
+    .then(res => res.json()).catch(error => console.log(error))
+    .then(data =>{
+      console.log(data.results[6])
+      setAddress(data.results[6].formatted_address)
+      console.log(data.results[6].formatted_address)
+    }
+       )
+  }, [account])
+
 
   const resetBadge = () => {
 
@@ -168,6 +186,7 @@ const Dashboard = () => {
           </Paper>
           <TabPanel value={value} index={0}>
             <Account
+              id={account?.id}
               firstName={account?.firstName}
               lastName={account?.lastName}
               imagePath={account?.imagePath}
@@ -177,9 +196,8 @@ const Dashboard = () => {
               instagram={account?.instagram}
               twitter={account?.twitter}
               address={address}
+              email={account?.email}
               updateParent={updateMyUser}
-              verified={isVerified}
-
             />
 
           </TabPanel>

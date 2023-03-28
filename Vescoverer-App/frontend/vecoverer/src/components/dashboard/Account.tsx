@@ -7,6 +7,8 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import { Navigate, useNavigate } from "react-router-dom";
 import { borderRadius, fontFamily } from "@mui/system";
 import EditPopUp from "./EditPopUp";
+import PlaceholderImage from "../../Images/placeholder1.png";
+
 
 
 
@@ -26,20 +28,19 @@ interface IProps {
     email: string | undefined
     age: number | undefined
     veganFor: string | undefined
-    longitude: number | undefined
-    latitude: number | undefined
     gender: string | undefined
     twitter: string | undefined
     instagram: string | undefined
     imagePath: string | undefined
+    address: string | undefined
   }
   
 
 
 const Account: React.FC<IProps> = ({ id, firstName,
     lastName, email, age, veganFor,
-    longitude, latitude, gender,
-    twitter, instagram, imagePath, updateParent
+    gender,twitter, instagram, 
+    imagePath, updateParent, address
 }) => {
 
 
@@ -143,7 +144,12 @@ const Account: React.FC<IProps> = ({ id, firstName,
                     <tr>
                         <th scope="row" colSpan={2}>
 
-                            {/* <img className={propverified ? "account-verified" : "account--avatar"} src={props.imgPath} placeholder={PlaceholderImage}/> */}
+                            <img className="account--avatar" src={imagePath} 
+                            placeholder={PlaceholderImage}
+                            style={{
+                                margin: "35px 0px"
+                            }}
+                            />
 
                             <h3 id="acc-full-name">{(firstName !== undefined &&
                                 lastName !== undefined) ? `${firstName} ${lastName}` : ""}</h3>  </th>
@@ -182,7 +188,7 @@ const Account: React.FC<IProps> = ({ id, firstName,
                         </th>
                     </tr>
                     <tr>
-                        {/* <th scope="row"colSpan={2}><h3>{address}</h3></th> */}
+                        <th scope="row"colSpan={2}><h3>{address}</h3></th>
                     </tr>
                 </tbody>
                 <tfoot>
