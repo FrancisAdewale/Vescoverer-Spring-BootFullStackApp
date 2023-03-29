@@ -10,7 +10,7 @@ import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBullet
 import Badge from '@mui/material/Badge';
 import "./Dashboard.css";
 import { Typography } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { display } from "@mui/system";
 import Account from './components/dashboard/Account';
@@ -71,6 +71,7 @@ const Dashboard = () => {
   const [isVerified, setIsVerfied] = useState(null);
   const [account, setUserAccount] = useState<User | null>(null);
   const [userData, setUserData] = useState<User[] | []>([]);
+
   const user = auth.currentUser?.email;
   const [address, setAddress] = useState<string| undefined>();
   const [latitude, setLatitude] = useState<number | undefined>();
@@ -84,6 +85,7 @@ const Dashboard = () => {
       .then(data => setUserData(data))
 
   }, []);
+
 
   const addBadgeCount = () => {
     setBadgeCount(prev => prev + 1)
@@ -101,46 +103,68 @@ const Dashboard = () => {
   useEffect(() => {
 
     let url = new URL("https://maps.googleapis.com/maps/api/geocode/json");
-
     url.searchParams.append("latlng", account?.latitude + "," + account?.longitude);
     url.searchParams.append("key", "AIzaSyAoXbdfMQwOfus_BWjI9isGCIYHz6IdSnM");
     fetch(url)
     .then(res => res.json()).catch(error => console.log(error))
     .then(data =>{
-      console.log(data.results[6])
-      setAddress(data.results[6].formatted_address)
-      console.log(data.results[6].formatted_address)
+      console.log(data.results)
+      setAddress(data.results[10].formatted_address)
+      console.log(data.results[10].formatted_address)
     }
        )
-  }, [account])
+   
+  }, [setAddress, account?.latitude, account?.longitude])
 
 
   const resetBadge = () => {
-
     setBadgeCount(0)
-
   }
+
+  useEffect(() => {
+
+    fetch("http://localhost:8080/api/user")
+    .then(res => res.json()).catch(error => console.log(error))
+    .then(data => setUserData(data))
+
+}, [account])
 
   const updateMyUser = (event: React.MouseEvent<HTMLButtonElement>, fName: string, sName: string,
     twit: string, insta: string, newImage: string) =>{ 
     event.preventDefault()
 
-    // db.collection("users").doc(user).set({
-    //   imagePath: newImage,
-    //   firstName: fName,
-    //   secondName: sName,
-    //   twitter: twit,
-    //   instagram: insta
+      if (account?.email === user) {
+        const requestOptions = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json',
+        },
+          body: JSON.stringify({ 
+            id: account?.id,
+            email: account?.email, 
+            veganFor: account?.veganFor,
+            longitude: account?.longitude,
+            latitude: account?.latitude,
+            firstName: fName,
+            lastName: sName,
+            gender: account?.gender,
+            imagePath: newImage,
+            instagram: insta,
+            twitter: twit,
+            completedReg: true,
+            age: account?.age
+          }),
+      };
+  
+        fetch("http://localhost:8080/api/user", requestOptions)
+        .then(res => res.json())
+        .catch(err => {console.log(err)})
 
-    // }, { merge: true })
-
-    setUpdate(true)
+      }
+      setUpdate(true)
 
   }
 
-
   const uploadClick = (event: React.MouseEvent<HTMLImageElement>) => {
-
     event.preventDefault()
     childRef.current?.click();
   }
@@ -148,7 +172,6 @@ const Dashboard = () => {
   const handleChange = ((e: React.SyntheticEvent<Element, Event>, newValue: any) => {
     setValue(newValue);
   });
-
 
 
   return (

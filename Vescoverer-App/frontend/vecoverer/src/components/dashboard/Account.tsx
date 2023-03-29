@@ -64,7 +64,6 @@ const Account: React.FC<IProps> = ({ id, firstName,
         }
     
     const handleUploadClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    
         event.preventDefault()
         hiddenFileInput.current?.click();
             
@@ -73,9 +72,6 @@ const Account: React.FC<IProps> = ({ id, firstName,
         const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     
             const {id, value} = event.target
-
-                   
-
             switch(id) {
                  //@ts-ignore 
                 case "firstName":
@@ -246,8 +242,6 @@ const Account: React.FC<IProps> = ({ id, firstName,
 
                         }}
                             onClick={(e) => updateParent(e, editFirstname, editSecondName, editTwitter, editInstagram, newImage)}>Done</button>
-
-
                     </>}
                     handleClose={togglePopup}
                 />}

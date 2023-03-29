@@ -34,11 +34,9 @@ const Age: FC<IProps> = ({ callback }) => {
   const [startDate, setStartDate] = useState<Date | null>(new Date(2000, 10, 10));
 
   const [age, setAge] = useState(0)
+  const h3Ele = document.getElementById("actual-age")
 
-  const actualAge = calculateAge(new Date(startDate?.getFullYear() as number,
-    startDate?.getMonth() as number, startDate?.getUTCDate()))
-
-  const h3Eele = document.getElementById("actual-age")
+  
 
   useEffect(() => {
     fetch("http://localhost:8080/api/user")
@@ -49,9 +47,15 @@ const Age: FC<IProps> = ({ callback }) => {
 
   const handleDateChange = (date: Date | null) => {
     setStartDate(date as Date)
+    
+  }
 
-    if(h3Eele != null) {
-      h3Eele.innerHTML = actualAge.toString();
+  useEffect(() => {
+    const actualAge = calculateAge(new Date(startDate?.getFullYear() as number,
+    startDate?.getMonth() as number, startDate?.getUTCDate()))
+
+    if(h3Ele != null) {
+      h3Ele.innerHTML = actualAge.toString();
 
       for(let i = 0; i < userData.length; i++) {
         if (userData[i].email === user) {
@@ -76,8 +80,14 @@ const Age: FC<IProps> = ({ callback }) => {
 
         }
       }
+
     }
-  }
+      
+
+  }, [startDate]);
+
+  console.log("start date: " + startDate);
+
 
 
   function calculateAge(date: Date) {

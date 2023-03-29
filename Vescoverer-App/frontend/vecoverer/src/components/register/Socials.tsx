@@ -42,6 +42,7 @@ const Socials : React.FC<IProps> = ({callback}) => {
                   lastName: userData[i].lastName,
                   gender: userData[i].gender,
                   imagePath: userData[i].imagePath,
+                  age: userData[i].age,
                   instagram: instagram,
                   twitter: twitter,
                   completedReg: true
