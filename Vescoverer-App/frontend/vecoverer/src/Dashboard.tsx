@@ -16,6 +16,7 @@ import { display } from "@mui/system";
 import Account from './components/dashboard/Account';
 import User from './model/User';
 import {auth} from './firebase.js';
+import Vescover from './components/dashboard/Vescover';
 
 
 
@@ -226,8 +227,11 @@ const Dashboard = () => {
           </TabPanel>
           <TabPanel value={value} index={1}>
 
+            
+
           </TabPanel>
           <TabPanel value={value} index={2}>
+          <Vescover/>
 
           </TabPanel>
           <TabPanel value={value} index={3}>
