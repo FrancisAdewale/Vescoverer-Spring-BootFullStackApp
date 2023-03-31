@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface FriendsListRepository extends JpaRepository<FriendsList, Integer> {
+public interface FriendsListRepository extends JpaRepository<FriendsList, Integer> {
 
 
 }

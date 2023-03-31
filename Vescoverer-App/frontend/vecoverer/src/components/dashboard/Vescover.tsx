@@ -80,7 +80,7 @@ const Vescover = () => {
 
 
     return (
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div style={{ height: '80vh', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyAoXbdfMQwOfus_BWjI9isGCIYHz6IdSnM", language: 'en',
           region: 'en',}}
