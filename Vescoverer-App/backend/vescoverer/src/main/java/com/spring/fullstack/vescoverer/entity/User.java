@@ -2,6 +2,7 @@ package com.spring.fullstack.vescoverer.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -190,6 +191,15 @@ public class User {
 
     public void setFriendsList(List<FriendsList> friendsList) {
         this.friendsList = friendsList;
+    }
+
+    public void add(FriendsList tempFriendList) {
+        if(friendsList == null){
+            friendsList = new ArrayList<>();
+        }
+
+        friendsList.add(tempFriendList);
+        tempFriendList.setUser(this);
     }
 
 

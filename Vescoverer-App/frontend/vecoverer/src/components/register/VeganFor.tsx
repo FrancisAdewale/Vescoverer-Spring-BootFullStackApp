@@ -36,6 +36,7 @@ const VeganFor : React.FC<IProps> = ({callback}) => {
         setRequired(required)
 
         h3Eele.textContent = value
+        
 
         //potentially pass this as a function to parent component
         for(let i = 0; i < userData.length; i++) {

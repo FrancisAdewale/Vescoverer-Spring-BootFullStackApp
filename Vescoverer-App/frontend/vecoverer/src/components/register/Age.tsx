@@ -56,6 +56,7 @@ const Age: FC<IProps> = ({ callback }) => {
 
     if(h3Ele != null) {
       h3Ele.innerHTML = actualAge.toString();
+      
 
       for(let i = 0; i < userData.length; i++) {
         if (userData[i].email === user) {

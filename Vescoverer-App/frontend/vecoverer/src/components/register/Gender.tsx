@@ -27,6 +27,8 @@ const Gender : FC<IProps> = ({callback}) => {
         const h3Eele = document.getElementById("user-gender") as HTMLHeadingElement
         const {value} = e.target
         h3Eele.textContent = value
+
+        
         for(let i = 0; i < userData.length; i++) {
             if (userData[i].email === user) {
               const requestOptions = {

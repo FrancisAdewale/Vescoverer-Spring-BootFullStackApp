@@ -1,5 +1,6 @@
 package com.spring.fullstack.vescoverer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,7 +12,8 @@ public class FriendsList {
     @Column(name="friend_id")
     int id;
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @JsonIgnore
+    @ManyToOne(cascade= { CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="user_id")
     User user;
@@ -49,6 +51,8 @@ public class FriendsList {
     public void setFriendId(int friendId) {
         this.friendId = friendId;
     }
+
+
 
     @Override
     public String toString() {

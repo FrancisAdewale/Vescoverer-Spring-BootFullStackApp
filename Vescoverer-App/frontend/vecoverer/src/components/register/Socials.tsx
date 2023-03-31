@@ -26,6 +26,7 @@ const Socials : React.FC<IProps> = ({callback}) => {
     useEffect(() => {
 
         console.log("twitter: "  +  twitter);
+        
         for(let i = 0; i < userData.length; i++) {
             if (userData[i].email === user) {
               const requestOptions = {
